@@ -30,21 +30,21 @@ bool sendText(String message)
 
 bool set_volume(volume v)
 {
-  byte query[] = {0x5B, 0x76, 0x30 + v, 0x5D};
+  byte query[] = {0x5B, 0x76, 0x30 + (byte) v, 0x5D};
   ttsSerial.write(query, 4);
   CHECK_RESPONSE;
 }
 
 bool set_speed(speed s)
 {
-  byte query[] = {0x5B, 0x76, 0x30 + s, 0x5D};
+  byte query[] = {0x5B, 0x76, 0x30 + (byte) s, 0x5D};
   ttsSerial.write(query, 4);
   CHECK_RESPONSE;
 }
 
 bool set_tone(sound_tone t)
 {
-  byte query[] = {0x5B, 0x76, 0x30 + t, 0x5D};
+  byte query[] = {0x5B, 0x76, 0x30 + (byte) t, 0x5D};
   ttsSerial.write(query, 4);
   CHECK_RESPONSE;
 }
@@ -53,7 +53,9 @@ byte check_status()
 {
   byte query[] = {0xFD, 0x00, 0x01, 0x21};
   ttsSerial.write(query, 4);
-  CHECK_RESPONSE;
+  byte response;
+  ttsSerial.readBytes(&response, 1);
+  return response;
 }
 
 module_state is_idle()
